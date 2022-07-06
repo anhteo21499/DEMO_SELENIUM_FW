@@ -1,6 +1,7 @@
 package org.example.action.common;
 
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.Color;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -112,22 +113,22 @@ public class BasePage {
 
 
     public void clickToElement(WebDriver driver, String xpathLocator) {
-        getElement(driver, xpathLocator).click();
+        getWebElement(driver, xpathLocator).click();
     }
 
     public void sendKeyElement(WebDriver driver, String xpathLocator, String key) {
-        WebElement element = getElement(driver, xpathLocator);
+        WebElement element = getWebElement(driver, xpathLocator);
         element.clear();
         element.sendKeys(key);
     }
 
 
     public String getTextElement(WebDriver driver, String xpathLocator) {
-        return getElement(driver, xpathLocator).getText();
+        return getWebElement(driver, xpathLocator).getText();
     }
 
     public String getCssValue(WebDriver driver, String xpathLocator, String propertyName) {
-        return getElement(driver, xpathLocator).getCssValue(propertyName);
+        return getWebElement(driver, xpathLocator).getCssValue(propertyName);
     }
 
     /**
@@ -151,7 +152,7 @@ public class BasePage {
      * @param itemValue
      */
     public void selectItemDropDown(WebDriver driver, String xpathLocator, String itemValue) {
-        Select select = new Select(getElement(driver, xpathLocator));
+        Select select = new Select(getWebElement(driver, xpathLocator));
         select.selectByValue(itemValue);
     }
 
@@ -163,7 +164,7 @@ public class BasePage {
      * @return
      */
     public String getValueItem(WebDriver driver, String xpathLocator) {
-        Select select = new Select(getElement(driver, xpathLocator));
+        Select select = new Select(getWebElement(driver, xpathLocator));
         return select.getFirstSelectedOption().getText();
     }
 
@@ -180,7 +181,7 @@ public class BasePage {
      * @param timeOutInSeconds
      */
     public void selectItemInDropDown(WebDriver driver, String xpathParent, String xpathChild, String expectedText, long timeOutInSeconds) {
-        getElement(driver, xpathParent).click();
+        getWebElement(driver, xpathParent).click();
         sleep(1);
 
         WebDriverWait wait = new WebDriverWait(driver, timeOutInSeconds);
@@ -203,8 +204,15 @@ public class BasePage {
      * @return
      */
     public boolean isMultipleDropDown(WebDriver driver, String xpathLocator) {
-        Select select = new Select(getElement(driver, xpathLocator));
+        Select select = new Select(getWebElement(driver, xpathLocator));
         return select.isMultiple();
+    }
+    
+//    dùng class Action thao tác với element
+    
+    public void hoverToElement(WebDriver driver, String xpathLocator) {
+        Actions actions = new Actions(driver);
+        actions.moveToElement(getWebElement(driver, xpathLocator)).perform();
     }
 
     /**
@@ -214,7 +222,7 @@ public class BasePage {
      * @param xpathLocator
      * @return
      */
-    public WebElement getElement(WebDriver driver, String xpathLocator) {
+    public WebElement getWebElement(WebDriver driver, String xpathLocator) {
         return driver.findElement(By.xpath(xpathLocator));
     }
 
