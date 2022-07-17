@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="FRAMEWORK_AUTO" />
+        <module name="DEMO_SELENIUM_FW" />
       </profile>
     </annotationProcessing>
   </component>
